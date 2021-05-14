@@ -241,7 +241,7 @@ AFRAME.registerComponent('gps-projected-camera', {
         // https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/watchPosition
         return navigator.geolocation.watchPosition(onSuccess, onError, {
             enableHighAccuracy: true,
-            maximumAge: this.data.gpsTimeInterval,
+            //maximumAge: this.data.gpsTimeInterval,
             timeout: 27000,
         });
     },
