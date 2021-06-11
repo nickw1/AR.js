@@ -1,5 +1,4 @@
 AFRAME.registerComponent('arjs-webcam-texture', {
-
     init: function() {
         this.scene = this.el.sceneEl;
         this.texCamera = new THREE.OrthographicCamera(-0.5, 0.5, 0.5, -0.5, 0, 10);
@@ -28,19 +27,10 @@ AFRAME.registerComponent('arjs-webcam-texture', {
                 this.video.play();
             })
             .catch(e => {  
-                if (!document.getElementById('error-popup')) {
-                    var errorPopup = document.createElement('div');
-                    errorPopup.innerHTML = `Webcam error: ${e}`
-                    errorPopup.setAttribute('id', 'error-popup');
-                    document.body.appendChild(errorPopup);
-                } });
+                this.el.sceneEl.systems['arjs']._displayErrorPopup(`Webcam error: ${e}`);
+            });
         } else {
-            if (!document.getElementById('error-popup')) {
-                var errorPopup = document.createElement('div');
-                errorPopup.innerHTML = 'sorry - media devices API not supported'
-                errorPopup.setAttribute('id', 'error-popup');
-                document.body.appendChild(errorPopup);
-            }
+            this.el.sceneEl.systems['arjs']._displayErrorPopup( 'sorry - media devices API not supported');
         }
     },
 
@@ -60,5 +50,5 @@ AFRAME.registerComponent('arjs-webcam-texture', {
         this.material.dispose();
         this.texture.dispose();
         this.geom.dispose();
-    }
+    },
 });

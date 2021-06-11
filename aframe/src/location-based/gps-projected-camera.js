@@ -117,20 +117,10 @@ AFRAME.registerComponent('gps-projected-camera', {
 
                 document.addEventListener('touchend', function() { handler() }, false);
 
-                if (!document.getElementById('error-popup')) {
-                    var errorPopup = document.createElement('div');
-                    errorPopup.innerHTML = 'After camera permission prompt, please tap the screen to activate geolocation.'
-                    errorPopup.setAttribute('id', 'error-popup');
-                    document.body.appendChild(errorPopup);
-                }
+                this.el.sceneEl.systems['arjs']._displayErrorPopup('After camera permission prompt, please tap the screen to activate geolocation.');
             } else {
                 var timeout = setTimeout(function() {
-                    if (!document.getElementById('error-popup')) {
-                        var errorPopup = document.createElement('div');
-                        errorPopup.innerHTML = 'Please enable device orientation in Settings > Safari > Motion & Orientation Access.'
-                        errorPopup.setAttribute('id', 'error-popup');
-                        document.body.appendChild(errorPopup);
-                    }
+                    this.el.sceneEl.systems['arjs']._displayErrorPopup('Please enable device orientation in Settings > Safari > Motion & Orientation Access.');
                 }, 750);
                 window.addEventListener(eventName, function() {
                     clearTimeout(timeout);
@@ -229,23 +219,12 @@ AFRAME.registerComponent('gps-projected-camera', {
 
                 if (err.code === 1) {
                     // User denied GeoLocation, let their know that
-                    if (!document.getElementById('error-popup')) {
-                        var errorPopup = document.createElement('div');
-                        errorPopup.innerHTML = 'Please activate Geolocation and refresh the page. If it is already active, please check permissions for this website.'
-                        errorPopup.setAttribute('id', 'error-popup');
-                        document.body.appendChild(errorPopup);
-                    }        
+                    this.el.sceneEl.systems['arjs']._displayErrorPopup('Please activate Geolocation and refresh the page. If it is already active, please check permissions for this website.');
                     return;
                 }
 
                 if (err.code === 3) {
-                    if (!document.getElementById('error-popup')) {
-                        var errorPopup = document.createElement('div');
-                        errorPopup.innerHTML = 'Cannot retrieve GPS position. Signal is absent.'
-                        errorPopup.setAttribute('id', 'error-popup');
-                        document.body.appendChild(errorPopup);
-                    }
-                    return;
+                    this.el.sceneEl.systems['arjs']._displayErrorPopup('Cannot retrieve GPS position. Signal is absent.');
                 }
             };
         }
@@ -501,6 +480,6 @@ AFRAME.registerComponent('gps-projected-camera', {
         if (this.loader && this.loader.parentElement) {
             document.body.removeChild(this.loader)
         }
-    }
+    },
 });
 
